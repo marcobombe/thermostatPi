@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane id="Profile" maxHeight="32.0" maxWidth="480.0" minHeight="32.0" minWidth="480.0" prefHeight="32.0" prefWidth="480.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thermostatPi.statusPanel">
+   <stylesheets>
+      <URL value="@Login.css" />
+   </stylesheets>
+   <children>
+      <HBox maxHeight="32.0" maxWidth="480.0" minHeight="32.0" minWidth="480.0" prefHeight="32.0" prefWidth="480.0" spacing="10.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+         <children>
+            <Circle fx:id="statusDot" fill="#1fffd6" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+            <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="315.0" progress="0.0" />
+            <Label id="label1" fx:id="dateLable" text="date" />
+            <Label id="label1" fx:id="timeLable" text="time" />
+         </children>
+         <padding>
+            <Insets bottom="3.0" left="6.0" right="6.0" top="3.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>
