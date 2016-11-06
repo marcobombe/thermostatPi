@@ -58,6 +58,8 @@ public class ProfileController extends AnchorPane implements Initializable {
     
     @FXML
     private Button exitLable;
+    @FXML
+    private Button settingsButton;
     
     public void setApp(Main application){
         this.application = application;
@@ -129,5 +131,16 @@ public class ProfileController extends AnchorPane implements Initializable {
         }
         
         application.userLogout();
+    }
+
+    @FXML
+    private void goToSettings(ActionEvent event) {
+        if (application == null){
+            // We are running in isolated FXML, possibly in Scene Builder.
+            // NO-OP.
+            return;
+        }
+        
+        application.gotoSettings();
     }
 }

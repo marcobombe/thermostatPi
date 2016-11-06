@@ -37,6 +37,8 @@ public class statusPanel implements Initializable {
     SimpleStringProperty dynamicDateProperty = new SimpleStringProperty();
     
     double progress;
+    
+    public Main application;
        
     @FXML
     private ProgressBar progressBar;
@@ -88,5 +90,9 @@ public class statusPanel implements Initializable {
         t.setName("Runnable Time Updater");
         t.setDaemon(true);
         t.start();      
-    }        
+    }      
+    
+    public void setApp(Main application){
+        this.application = application;
+    }
 }

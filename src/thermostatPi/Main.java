@@ -69,10 +69,19 @@ public class Main extends Application {
         gotoLogin();
     }
     
-    private void gotoProfile() {
+    public void gotoProfile() {
         try {
             ProfileController profile = (ProfileController) replaceSceneContent("profile.fxml");
             profile.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void gotoSettings() {
+        try {
+            SettingsController settings = (SettingsController) replaceSceneContent("settings.fxml");
+            settings.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

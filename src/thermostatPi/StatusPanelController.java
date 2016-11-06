@@ -16,7 +16,7 @@ import javafx.fxml.Initializable;
  */
 public class StatusPanelController implements Initializable {
 
-    private Main application;
+    public Main application;
     /**
      * Initializes the controller class.
      */

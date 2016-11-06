@@ -47,8 +47,8 @@
          <children>
             <Pane maxWidth="480.0" minWidth="480.0" prefHeight="320.0" prefWidth="480.0">
                <children>
-                  <Button fx:id="exitLable" layoutX="351.0" layoutY="128.0" mnemonicParsing="false" onAction="#exit" text="%logout" />
-                  <Button layoutX="240.0" layoutY="128.0" mnemonicParsing="false" text="Settings" />
+                  <Button fx:id="exitLable" layoutX="363.0" layoutY="241.0" mnemonicParsing="false" onAction="#exit" text="%logout" />
+                  <Button fx:id="settingsButton" layoutX="240.0" layoutY="241.0" mnemonicParsing="false" onAction="#goToSettings" text="%settings" />
                </children>
             </Pane>
             <fx:include source="statusPanel.fxml" />

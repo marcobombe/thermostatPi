@@ -1,27 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane id="AnchorPane" maxHeight="320.0" maxWidth="480.0" minHeight="320.0" minWidth="480.0" prefHeight="320.0" prefWidth="480.0" styleClass="background" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="thermostatPi.LoginController">
   <children>
-      <VBox alignment="CENTER" layoutX="44.0" layoutY="50.0" prefHeight="219.0" prefWidth="393.0" spacing="10.0">
+      <VBox prefHeight="320.0" prefWidth="480.0">
          <children>
-    <Label id="label1" text="%username" />
-    <TextField id="textField1" fx:id="userId" prefHeight="25.0" prefWidth="400.0" />
-      <Label id="label1" text="%password" />
-      <PasswordField id="passwordField1" fx:id="password" prefHeight="25.0" prefWidth="400.0" />
-            <Button fx:id="login" mnemonicParsing="false" onAction="#processLogin" prefHeight="33.0" prefWidth="394.0" text="%login" />
-        <Label id="label2" fx:id="errorMessage" prefHeight="33.0" prefWidth="400.0" />
+            <Pane prefHeight="295.0" prefWidth="480.0">
+               <children>
+                  <VBox alignment="CENTER" layoutX="18.0" prefHeight="288.0" prefWidth="445.0" spacing="10.0">
+                     <children>
+                <Label id="label1" text="%username" />
+                <TextField id="textField1" fx:id="userId" prefHeight="25.0" prefWidth="400.0" />
+                  <Label id="label1" text="%password" />
+                  <PasswordField id="passwordField1" fx:id="password" alignment="CENTER" prefHeight="25.0" prefWidth="400.0" />
+                        <Button fx:id="login" mnemonicParsing="false" onAction="#processLogin" prefHeight="33.0" prefWidth="481.0" text="%login" />
+                    <Label id="label2" fx:id="errorMessage" prefHeight="51.0" prefWidth="181.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+            <fx:include source="statusPanel.fxml" />
          </children>
       </VBox>
   </children>
   <stylesheets>
     <URL value="@Login.css" />
   </stylesheets>
+   <rotationAxis>
+      <Point3D />
+   </rotationAxis>
 </AnchorPane>
