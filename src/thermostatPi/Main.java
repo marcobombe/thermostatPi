@@ -26,6 +26,7 @@ public class Main extends Application {
 
     private Stage stage;
     private User loggedUser;
+    private ThermostatModel thermostatModel;
 
 
     /**
@@ -45,6 +46,7 @@ public class Main extends Application {
             stage.setResizable(false);
             gotoLogin();
             primaryStage.show();
+            thermostatModel = new ThermostatModel();
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -73,6 +75,7 @@ public class Main extends Application {
         try {
             ProfileController profile = (ProfileController) replaceSceneContent("profile.fxml");
             profile.setApp(this);
+            profile.setModel(thermostatModel);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

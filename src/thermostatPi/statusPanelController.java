@@ -27,7 +27,7 @@ import javafx.scene.shape.Circle;
  *
  * @author Marco
  */
-public class statusPanel implements Initializable {
+public class statusPanelController implements Initializable {
 
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");

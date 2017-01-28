@@ -55,6 +55,7 @@ public class ProfileController extends AnchorPane implements Initializable {
     private Label success;
     
     public Main application;
+    public ThermostatModel model;
     
     @FXML
     private Button exitLable;
@@ -142,5 +143,9 @@ public class ProfileController extends AnchorPane implements Initializable {
         }
         
         application.gotoSettings();
+    }
+
+    void setModel(ThermostatModel thermostatModel) {
+        this.model = thermostatModel;
     }
 }
