@@ -6,7 +6,7 @@ ThermostatModel::ThermostatModel()
 {
     temperature = 1.0;
     dbm.openDB("model.db");
-    dbm.createTable();
+    dbm.createTables();
 }
 
 float ThermostatModel::getCurrentTemperature()

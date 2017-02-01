@@ -26,7 +26,6 @@ void Login::on_pushButton_clicked()
 {
     ui->lineEdit->setText("");
     ui->lineEdit_2->setText("");
-    //MainWindow::getInstance()->getStakedWidget()->setCurrentWidget(Dashboard::getInstance());
     MainWindow::getInstance()->getStakedWidget()->setCurrentWidget(Dashboard::getInstance());
 }
 
@@ -37,7 +36,6 @@ void Login::setModel(ThermostatModel *newthermostatModel)
 }
 
 Login* Login::getInstance() {
-
     if(!instance) {
         instance = new Login();
         return instance;

@@ -15,13 +15,9 @@ DbManager::DbManager(const QString &path)
     m_db.setDatabaseName(path);
 
     if (!m_db.open())
-    {
-        qDebug() << "Error: connection with database fail";
-    }
+        qDebug() << Q_FUNC_INFO << "ERROR: connection with database " + path + " fail.";
     else
-    {
-        qDebug() << "Database: connection ok";
-    }
+        qDebug() << Q_FUNC_INFO << "Connection with database " + path + " successful.";
 }
 
 DbManager::openDB(const QString &path)
@@ -30,13 +26,10 @@ DbManager::openDB(const QString &path)
     m_db.setDatabaseName(path);
 
     if (!m_db.open())
-    {
-        qDebug() << "Error: connection with database fail";
-    }
+        qDebug() << Q_FUNC_INFO << "ERROR: connection with database " + path + " fail.";
     else
-    {
-        qDebug() << "Database: connection ok";
-    }
+        qDebug() << Q_FUNC_INFO << "Connection with database " + path + " successful.";
+
     return m_db.isOpen();
 }
 
@@ -53,20 +46,79 @@ bool DbManager::isOpen() const
     return m_db.isOpen();
 }
 
-bool DbManager::createTable()
+bool DbManager::createTableUsers()
 {
     bool success = false;
 
     QSqlQuery query;
-    query.prepare("CREATE TABLE users(id integer primary key, user text, password text);");
+    QString queryText;
+    queryText.append("CREATE TABLE " + TABLE_USERS + " (");
+    queryText.append("id INT AUTO_INCREMENT, ");
+    queryText.append(FIELD_USER + " varchar (255)" + ", ");
+    queryText.append(FIELD_USER_PASSWORD + " varchar (255)");
+    queryText.append(");");
+    qDebug() << Q_FUNC_INFO << queryText;
+
+    query.prepare(queryText);
 
     if (!query.exec())
     {
-        qDebug() << "Couldn't create the table 'users': one might already exist.";
+        qDebug() << Q_FUNC_INFO << "Couldn't create the table "+ TABLE_USERS + ", may already exist." << query.lastError();
         success = false;
     }
 
     return success;
+}
+
+bool DbManager::createTableGlobals()
+{
+    bool success = false;
+
+    QSqlQuery query;
+    QString queryText;
+    queryText.append("CREATE TABLE " + TABLE_GLOBALS + " (");
+    queryText.append("id INT AUTO_INCREMENT, ");
+    queryText.append(FIELD_DB_VERSION + " varchar (255)");
+    queryText.append(");");
+    qDebug() << Q_FUNC_INFO << queryText;
+
+    query.prepare(queryText);
+
+    if (!query.exec())
+    {
+        qDebug() << Q_FUNC_INFO << "Couldn't create the table "+ TABLE_GLOBALS + ", may already exist." << query.lastError();
+        success = false;
+    }
+
+    queryText.clear();
+    queryText.append("INSERT INTO " + TABLE_GLOBALS + " ");
+    queryText.append("(" + FIELD_DB_VERSION + ")");
+    queryText.append(" VALUES ");
+    queryText.append("('" + DB_VERSION + "')");
+    queryText.append(";");
+    qDebug() << Q_FUNC_INFO << queryText;
+
+    query.prepare(queryText);
+
+    if (!query.exec())
+    {
+        qDebug() << Q_FUNC_INFO << "Couldn't create version tuple in "+ TABLE_GLOBALS + ", may already exist." << query.lastError();
+        success = false;
+    }
+
+    return success;
+}
+
+
+bool DbManager::createTables()
+{
+    bool users_created = false;
+    bool globals_created = false;
+
+    users_created = createTableUsers();
+    globals_created = createTableGlobals();
+
+    return users_created && globals_created;
 }
 
 bool DbManager::addUser(const QString& user, const QString& password)

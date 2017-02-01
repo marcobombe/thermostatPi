@@ -15,6 +15,25 @@
  * 2. sqilte> CREATE TABLE users(ids integer primary key, name text);
  * 3. sqlite> .quit
  */
+
+static const QString DB_VERSION = "0.0";
+
+static const QString TABLE_USERS = "Users";
+
+static const QString FIELD_USER = "User";
+static const QString FIELD_ADMIN = "Admin";
+static const QString FIELD_USER_PASSWORD = "UserPassword";
+static const QString FIELD_ADMIN_PASSWORD = "AdminPassword";
+
+static const QString DEFAULT_USER = "User";
+static const QString DEFAULT_ADMIN = "Admin";
+static const QString DEFAULT_USER_PASSWORD = "12345678";
+static const QString DEFAULT_ADMIN_PASSWORD = "12345678";
+
+static const QString TABLE_GLOBALS = "Globals";
+
+static const QString FIELD_DB_VERSION = "db_version";
+
 class DbManager
 {
 public:
@@ -23,7 +42,7 @@ public:
     ~DbManager();
     int openDB(const QString &path);
     bool isOpen() const;
-    bool createTable();
+    bool createTables();
     bool addUser(const QString& user, const QString& password);
     bool removeUser(const QString& name);
     bool userExists(const QString& name) const;
@@ -32,6 +51,8 @@ public:
 
 private:
     QSqlDatabase m_db;
+    bool createTableUsers();
+    bool createTableGlobals();
 };
 
 #endif // DBMANAGER_H
