@@ -3,6 +3,7 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QDebug>
+#include <QFile>
 
 DbManager::DbManager()
 {
@@ -13,6 +14,7 @@ DbManager::DbManager(const QString &path)
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName(path);
+    dbpath = path;
 
     if (!m_db.open())
         qDebug() << Q_FUNC_INFO << "ERROR: connection with database " + path + " fail.";
@@ -24,6 +26,7 @@ DbManager::openDB(const QString &path)
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName(path);
+    dbpath = path;
 
     if (!m_db.open())
         qDebug() << Q_FUNC_INFO << "ERROR: connection with database " + path + " fail.";
@@ -36,9 +39,7 @@ DbManager::openDB(const QString &path)
 DbManager::~DbManager()
 {
     if (m_db.isOpen())
-    {
         m_db.close();
-    }
 }
 
 bool DbManager::isOpen() const
@@ -48,8 +49,7 @@ bool DbManager::isOpen() const
 
 bool DbManager::createTableUsers()
 {
-    bool success = false;
-
+    bool status = true;
     QSqlQuery query;
     QString queryText;
     queryText.append("CREATE TABLE " + TABLE_USERS + " (");
@@ -57,74 +57,120 @@ bool DbManager::createTableUsers()
     queryText.append(FIELD_USER + " varchar (255)" + ", ");
     queryText.append(FIELD_USER_PASSWORD + " varchar (255)");
     queryText.append(");");
-    qDebug() << Q_FUNC_INFO << queryText;
 
     query.prepare(queryText);
 
     if (!query.exec())
     {
         qDebug() << Q_FUNC_INFO << "Couldn't create the table "+ TABLE_USERS + ", may already exist." << query.lastError();
-        success = false;
+        status = false;
     }
-
-    return success;
+    query.clear();
+    return status;
 }
 
 bool DbManager::createTableGlobals()
 {
-    bool success = false;
-
+    bool statusQueryCreate = true;
+    bool statusQueryInsert = true;
     QSqlQuery query;
     QString queryText;
     queryText.append("CREATE TABLE " + TABLE_GLOBALS + " (");
-    queryText.append("id INT AUTO_INCREMENT, ");
+    queryText.append("id INT AUTO_INCREMENT NOT NULL, ");
     queryText.append(FIELD_DB_VERSION + " varchar (255)");
     queryText.append(");");
-    qDebug() << Q_FUNC_INFO << queryText;
 
     query.prepare(queryText);
 
     if (!query.exec())
     {
         qDebug() << Q_FUNC_INFO << "Couldn't create the table "+ TABLE_GLOBALS + ", may already exist." << query.lastError();
-        success = false;
+        statusQueryCreate = false;
     }
 
     queryText.clear();
     queryText.append("INSERT INTO " + TABLE_GLOBALS + " ");
-    queryText.append("(" + FIELD_DB_VERSION + ")");
+    queryText.append("( id ," + FIELD_DB_VERSION + ")");
     queryText.append(" VALUES ");
-    queryText.append("('" + DB_VERSION + "')");
+    queryText.append("( 1," + DB_VERSION + ")");
     queryText.append(";");
-    qDebug() << Q_FUNC_INFO << queryText;
 
     query.prepare(queryText);
 
     if (!query.exec())
     {
         qDebug() << Q_FUNC_INFO << "Couldn't create version tuple in "+ TABLE_GLOBALS + ", may already exist." << query.lastError();
-        success = false;
+        statusQueryInsert = false;
+    }
+    query.clear();
+    return statusQueryCreate & statusQueryInsert;
+}
+
+bool DbManager::chekDbVersion() const
+{
+    bool statusQuery = true;
+    bool checkStatus = true;
+    QSqlQuery query;
+    QString queryText;
+    QString version;
+    queryText.append("SELECT " + FIELD_DB_VERSION + " FROM " + TABLE_GLOBALS);
+    queryText.append(";");
+    query.prepare(queryText);
+
+    if (!query.exec())
+    {
+        qDebug() << Q_FUNC_INFO << "Couldn't find " << FIELD_DB_VERSION << "in "+ TABLE_GLOBALS << query.lastError();
+        statusQuery = false;
     }
 
-    return success;
+    int idversion = query.record().indexOf(FIELD_DB_VERSION);
+
+    while (query.next())
+        version = query.value(idversion).toString();
+
+    if (version != DB_VERSION)
+    {
+        qDebug() << Q_FUNC_INFO << "Db version check failed (version: " << version << ", required version: " << DB_VERSION << ")";
+        checkStatus = false;
+    }
+    if (checkStatus)
+        qDebug() << Q_FUNC_INFO << "Db version check passed (version: " << version << ", required version: " << DB_VERSION << ")";
+
+    query.clear();
+    return statusQuery & checkStatus;
 }
 
 
 bool DbManager::createTables()
 {
-    bool users_created = false;
-    bool globals_created = false;
+    bool users_created = true;
+    bool globals_created = true;
+    bool vesionCheckPassed = true;
+    bool fileDeleted = true;
 
-    users_created = createTableUsers();
-    globals_created = createTableGlobals();
+    vesionCheckPassed = chekDbVersion();
 
-    return users_created && globals_created;
+    if (!vesionCheckPassed)
+    {
+        m_db.close();
+        if (QFile::remove(this->dbpath))
+            qDebug() << Q_FUNC_INFO << "DB " << this->dbpath << " deleted";
+        else
+        {
+            qDebug() << Q_FUNC_INFO << "Error deleting DB " << this->dbpath;
+            fileDeleted = false;
+        }
+        openDB(dbpath);
+        users_created = createTableUsers();
+        globals_created = createTableGlobals();
+
+    }
+
+    return users_created & globals_created & vesionCheckPassed & fileDeleted;
 }
 
 bool DbManager::addUser(const QString& user, const QString& password)
 {
-    bool success = false;
-
     if (!user.isEmpty() && !password.isEmpty())
     {
         QSqlQuery queryAdd;
@@ -134,54 +180,57 @@ bool DbManager::addUser(const QString& user, const QString& password)
 
         if(queryAdd.exec())
         {
-            success = true;
+            return true;
         }
         else
         {
-            qDebug() << "add user failed: " << queryAdd.lastError();
+            qDebug() << Q_FUNC_INFO << "add user failed: " << queryAdd.lastError();
+            return false;
         }
     }
     else
     {
-        qDebug() << "add user failed: name cannot be empty";
+        qDebug() << Q_FUNC_INFO << "add user failed: name cannot be empty";
+        return false;
     }
-
-    return success;
+    return true;
 }
 
 bool DbManager::removeUser(const QString& name)
 {
-    bool success = false;
+    bool queryStatus = true;
+    QSqlQuery queryDelete;
 
     if (userExists(name))
     {
-        QSqlQuery queryDelete;
         queryDelete.prepare("DELETE FROM users WHERE name = (:name)");
         queryDelete.bindValue(":name", name);
-        success = queryDelete.exec();
+        queryStatus = queryDelete.exec();
 
-        if(!success)
+        if(!queryStatus)
         {
-            qDebug() << "remove user failed: " << queryDelete.lastError();
+            qDebug() << Q_FUNC_INFO << "remove user failed: " << queryDelete.lastError();
+            queryStatus = false;
         }
     }
     else
     {
-        qDebug() << "remove user failed: person doesnt exist";
+        qDebug() << Q_FUNC_INFO << "remove user failed: person doesnt exist";
+        queryStatus = false;
     }
-
-    return success;
+    queryDelete.clear();
+    return queryStatus;
 }
 
 void DbManager::printAllUsers() const
 {
-    qDebug() << "Users in db:";
+    qDebug() << Q_FUNC_INFO << "Users in db:";
     QSqlQuery query("SELECT * FROM users");
     int idName = query.record().indexOf("user");
     while (query.next())
     {
         QString name = query.value(idName).toString();
-        qDebug() << "===" << name;
+        qDebug() << Q_FUNC_INFO << "===" << name;
     }
 }
 
@@ -202,27 +251,19 @@ bool DbManager::userExists(const QString& name) const
     }
     else
     {
-        qDebug() << "user exists failed: " << checkQuery.lastError();
+        qDebug() << Q_FUNC_INFO << "user exists failed: " << checkQuery.lastError();
     }
-
     return exists;
 }
 
 bool DbManager::removeAllUsers()
 {
-    bool success = false;
-
-    QSqlQuery removeQuery;
-    removeQuery.prepare("DELETE FROM users");
-
-    if (removeQuery.exec())
+    QSqlQuery query;
+    query.prepare("DELETE FROM users");
+    if (!query.exec())
     {
-        success = true;
+        qDebug() << Q_FUNC_INFO << "remove all users failed: " << query.lastError();
+        return false;
     }
-    else
-    {
-        qDebug() << "remove all users failed: " << removeQuery.lastError();
-    }
-
-    return success;
+    return true;
 }

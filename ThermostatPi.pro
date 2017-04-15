@@ -31,3 +31,8 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     dashboard.ui \
     login.ui
+
+DISTFILES +=
+
+RESOURCES += \
+    resourcefile.qrc

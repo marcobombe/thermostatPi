@@ -25,49 +25,60 @@
   <property name="windowTitle">
    <string>Login</string>
   </property>
-  <widget class="QWidget" name="gridLayoutWidget">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>100</y>
-     <width>160</width>
-     <height>80</height>
+     <x>150</x>
+     <y>90</y>
+     <width>181</width>
+     <height>91</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit_2"/>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Password</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="lineEdit"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Utente</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="title">
+    <string>Login</string>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>160</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLineEdit" name="passwordLineEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Login</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>passwordLineEdit</zorder>
+   <zorder>verticalLayoutWidget</zorder>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QLabel" name="messageLabel">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>280</y>
-     <width>75</width>
+     <x>200</x>
+     <y>180</y>
+     <width>158</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>Login</string>
+    <string>messageLable</string>
    </property>
   </widget>
  </widget>

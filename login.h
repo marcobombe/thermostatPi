@@ -30,6 +30,7 @@ private:
     Ui::Login *ui;
     static Login* instance;
     ThermostatModel *thermostatModel;
+    bool verifyPassword();
     //QWidget *mainwindow;
 };
 

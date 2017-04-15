@@ -47,12 +47,14 @@ public:
     bool removeUser(const QString& name);
     bool userExists(const QString& name) const;
     void printAllUsers() const;
+    bool chekDbVersion() const;
     bool removeAllUsers();
 
 private:
     QSqlDatabase m_db;
     bool createTableUsers();
     bool createTableGlobals();
+    QString dbpath;
 };
 
 #endif // DBMANAGER_H
