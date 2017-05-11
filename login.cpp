@@ -14,8 +14,8 @@ Login::Login(QWidget *parent) :
     setWindowModality(Qt::ApplicationModal);
     setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::FramelessWindowHint);
     this->move(QPoint(0,0));
-    ui->passwordLineEdit->setEchoMode(QLineEdit::Password);
-    ui->messageLabel->setText("");ui->messageLabel->setText("");
+    ui->lePassword->setEchoMode(QLineEdit::Password);
+    ui->lMessage->setText("");ui->lMessage->setText("");
 
     QImage myImage;
     myImage.load("C:/workspace/thermostatPi/src/images/y.png");
@@ -37,16 +37,6 @@ Login::~Login()
     delete ui;
 }
 
-void Login::on_pushButton_clicked()
-{
-    ui->messageLabel->setText("");
-
-    if (verifyPassword())
-        MainWindow::getInstance()->getStakedWidget()->setCurrentWidget(Dashboard::getInstance());
-    else
-        ui->messageLabel->setText(tr("Wrong password."));
-}
-
 void Login::setModel(ThermostatModel *newthermostatModel)
 {
     this->thermostatModel = newthermostatModel;
@@ -55,8 +45,8 @@ void Login::setModel(ThermostatModel *newthermostatModel)
 
 bool Login::verifyPassword()
 {
-    qDebug() << Q_FUNC_INFO << ui->passwordLineEdit->text();
-    if (ui->passwordLineEdit->text().compare("123")==0)
+    qDebug() << Q_FUNC_INFO << ui->lePassword->text();
+    if (ui->lePassword->text().compare("123")==0)
         return true;
     else
         return false;
@@ -70,4 +60,14 @@ Login* Login::getInstance() {
     else {
         return instance;
     }
+}
+
+void Login::on_pbLogin_clicked()
+{
+    ui->lMessage->setText("");
+
+    if (verifyPassword())
+        MainWindow::getInstance()->getStakedWidget()->setCurrentWidget(Dashboard::getInstance());
+    else
+        ui->lMessage->setText(tr("Wrong password."));
 }

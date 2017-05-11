@@ -25,33 +25,49 @@
   <property name="windowTitle">
    <string>Login</string>
   </property>
-  <widget class="QGroupBox" name="groupBox">
+  <widget class="QGroupBox" name="gbLogin">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>90</y>
-     <width>181</width>
+     <x>130</x>
+     <y>100</y>
+     <width>221</width>
      <height>91</height>
     </rect>
    </property>
    <property name="title">
     <string>Login</string>
    </property>
-   <widget class="QWidget" name="verticalLayoutWidget">
+   <widget class="QLabel" name="lUserIcon">
     <property name="geometry">
      <rect>
       <x>10</x>
+      <y>40</y>
+      <width>32</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="resourcefile.qrc">:/src/images/Buddha Line Icons/32/user.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
       <y>30</y>
-      <width>160</width>
+      <width>161</width>
       <height>51</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QLineEdit" name="passwordLineEdit"/>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLineEdit" name="lePassword"/>
      </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
+     <item row="1" column="0">
+      <widget class="QPushButton" name="pbLogin">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -65,14 +81,12 @@
      </item>
     </layout>
    </widget>
-   <zorder>passwordLineEdit</zorder>
-   <zorder>verticalLayoutWidget</zorder>
   </widget>
-  <widget class="QLabel" name="messageLabel">
+  <widget class="QLabel" name="lMessage">
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>180</y>
+     <y>190</y>
      <width>158</width>
      <height>23</height>
     </rect>
@@ -82,6 +96,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resourcefile.qrc"/>
+ </resources>
  <connections/>
 </ui>
