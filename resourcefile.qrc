@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/images/Buddha Line Icons/32/user.png</file>
+        <file>src/images/Buddha Line Icons/32/out.png</file>
+        <file>src/images/Buddha Line Icons/32/setting.png</file>
+        <file>src/images/Buddha Line Icons/32/minus.png</file>
+        <file>src/images/Buddha Line Icons/32/pluse.png</file>
+    </qresource>
+</RCC>
