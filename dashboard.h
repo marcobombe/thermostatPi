@@ -3,7 +3,6 @@
 
 #include <QDialog>
 #include <thermostatmodel.h>
-//#include "mainwindow.h"
 
 namespace Ui {
 class Dashboard;
@@ -16,6 +15,7 @@ class Dashboard : public QDialog
 public:
     explicit Dashboard (QWidget *parent = 0);
     void setModel(ThermostatModel *newthermostatModel);
+    void updateTemperatureDisplay(float temperature);
     static Dashboard *getInstance();
     ~Dashboard();
 
@@ -23,8 +23,15 @@ signals:
     void loggedIn();
 
 private slots:
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
+    void on_pbLogoff_clicked();
+    void on_pbQuit_clicked();
+
+    void on_pbPlus_clicked();
+
+    void on_pbMinus_clicked();
+
+public slots:
+    void setValue(int value);
 
 private:
     Ui::Dashboard *ui;

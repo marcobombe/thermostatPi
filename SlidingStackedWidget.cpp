@@ -19,34 +19,27 @@ SlidingStackedWidget::~SlidingStackedWidget() {
 
 int SlidingStackedWidget::addWidget(QWidget *widget){
     qDebug() << Q_FUNC_INFO <<" " << widgetStack;
-    //widgetStack.push(widget);
+    widgetStack.push(widget);
     return QStackedWidget::addWidget(widget);
 }
 
-void SlidingStackedWidget::setCurrentWidget(QWidget *widget){
-    widgetStack.push(widget);
-    qDebug() << Q_FUNC_INFO <<" " << widgetStack;
-    QStackedWidget::setCurrentWidget(widget);
-}
 
-int SlidingStackedWidget::setRootWidget(QWidget *widget){
+void SlidingStackedWidget::setRootWidget(QWidget *widget){
     rootWidget = widget;
     qDebug() << Q_FUNC_INFO <<" " << widgetStack;
-    return 1;
 }
 
 void SlidingStackedWidget::setPreviousWidget(){
     if (!widgetStack.isEmpty()){
+        poppedWidget = widgetStack.pop();
         if (!widgetStack.isEmpty())
             poppedWidget = widgetStack.pop();
-        if (!widgetStack.isEmpty())
-            poppedWidget = widgetStack.pop();
-        qDebug() << Q_FUNC_INFO <<" " << widgetStack;
+        qDebug() << Q_FUNC_INFO <<"°°°°°°°°°°°popped°°°°°°°°°° " << widgetStack;
         QStackedWidget::setCurrentWidget(poppedWidget);
     }
     else {
         widgetStack.clear();
         QStackedWidget::setCurrentWidget(rootWidget);
-        qDebug() << Q_FUNC_INFO <<" " << rootWidget;
+        qDebug() << Q_FUNC_INFO <<"°°°°°°°°°°°default°°°°°°°°°° " << rootWidget;
     }
 }

@@ -15,7 +15,8 @@ Login::Login(QWidget *parent) :
     setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::FramelessWindowHint);
     this->move(QPoint(0,0));
     ui->lePassword->setEchoMode(QLineEdit::Password);
-    ui->lMessage->setText("");ui->lMessage->setText("");
+    ui->lMessage->setText("");
+    ui->lePassword->setText("");
 
     QImage myImage;
     myImage.load("C:/workspace/thermostatPi/src/images/y.png");
@@ -40,6 +41,7 @@ Login::~Login()
 void Login::setModel(ThermostatModel *newthermostatModel)
 {
     this->thermostatModel = newthermostatModel;
+    qDebug() << Q_FUNC_INFO <<"Assigned thermostat model" << this->thermostatModel;
     return;
 }
 
@@ -53,11 +55,14 @@ bool Login::verifyPassword()
 }
 
 Login* Login::getInstance() {
+
     if(!instance) {
         instance = new Login();
+        instance->ui->lePassword->setText("");
         return instance;
     }
     else {
+        instance->ui->lePassword->setText("");
         return instance;
     }
 }
@@ -65,9 +70,8 @@ Login* Login::getInstance() {
 void Login::on_pbLogin_clicked()
 {
     ui->lMessage->setText("");
-
     if (verifyPassword())
         MainWindow::getInstance()->getStakedWidget()->setCurrentWidget(Dashboard::getInstance());
     else
-        ui->lMessage->setText(tr("Wrong password."));
+        ui->lMessage->setText(tr("Codice di accesso errato."));
 }

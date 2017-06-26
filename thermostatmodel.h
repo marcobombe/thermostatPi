@@ -12,11 +12,15 @@ public:
     ThermostatModel();
     ~ThermostatModel();
     float getCurrentTemperature();
-    void incrementTemperature(QString name);
+    void incrementTemperature();
+    void decrementTemperature();
 
 private:
     float temperature;
     DbManager dbm;
+
+signals:
+    void temperatureChanged(float value);
 };
 
 #endif // THERMOSTATMODEL_H

@@ -23,11 +23,11 @@ Dashboard::~Dashboard()
 void Dashboard::setModel(ThermostatModel *newthermostatModel)
 {
     this->thermostatModel = newthermostatModel;
+    qDebug() << Q_FUNC_INFO <<"Assigned thermostat model" << this->thermostatModel;
     return;
 }
 
 Dashboard* Dashboard::getInstance() {
-
     if(!instance) {
         instance = new Dashboard();
         return instance;
@@ -37,12 +37,28 @@ Dashboard* Dashboard::getInstance() {
     }
 }
 
-void Dashboard::on_pushButton_clicked()
+void Dashboard::updateTemperatureDisplay(float temperature){
+    ui->lTempValue->setText(QString::number(temperature));
+    return;
+}
+
+void Dashboard::on_pbLogoff_clicked()
+{
+    MainWindow::getInstance()->getStakedWidget()->setCurrentWidget(Login::getInstance());
+}
+
+void Dashboard::on_pbQuit_clicked()
 {
     QApplication::quit();
 }
 
-void Dashboard::on_pushButton_2_clicked()
+void Dashboard::on_pbPlus_clicked()
 {
-    MainWindow::getInstance()->getStakedWidget()->setPreviousWidget();
+    thermostatModel->getCurrentTemperature();
+    thermostatModel->incrementTemperature();
+}
+
+void Dashboard::on_pbMinus_clicked()
+{
+    thermostatModel->decrementTemperature();
 }

@@ -28,8 +28,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>60</y>
+     <x>10</x>
+     <y>0</y>
      <width>91</width>
      <height>20</height>
     </rect>
@@ -38,12 +38,12 @@
     <string>Dashboard</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pbQuit">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>190</y>
-     <width>75</width>
+     <x>20</x>
+     <y>220</y>
+     <width>31</width>
      <height>23</height>
     </rect>
    </property>
@@ -51,46 +51,157 @@
     <string>Quit</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="pbLogoff">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>190</y>
-     <width>75</width>
-     <height>23</height>
+     <x>440</x>
+     <y>10</y>
+     <width>30</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
-    <string>Back</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resourcefile.qrc">
+     <normaloff>:/src/images/Buddha Line Icons/32/out.png</normaloff>:/src/images/Buddha Line Icons/32/out.png</iconset>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QLabel" name="lStatus">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbSettings">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>240</y>
+     <width>30</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resourcefile.qrc">
+     <normaloff>:/src/images/Buddha Line Icons/32/setting.png</normaloff>:/src/images/Buddha Line Icons/32/setting.png</iconset>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="progressBar">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>290</y>
+     <width>118</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>24</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lTempValue">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>120</y>
+     <width>91</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>36</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>00,0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lTempUnit_2">
    <property name="geometry">
     <rect>
      <x>230</x>
-     <y>70</y>
-     <width>75</width>
-     <height>23</height>
+     <y>120</y>
+     <width>16</width>
+     <height>21</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
    <property name="text">
-    <string>show</string>
+    <string>o</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QLabel" name="lTempUnit_3">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>100</y>
-     <width>75</width>
-     <height>23</height>
+     <x>240</x>
+     <y>120</y>
+     <width>31</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>28</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>C</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbPlus">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>110</y>
+     <width>30</width>
+     <height>30</height>
     </rect>
    </property>
    <property name="text">
-    <string>hide</string>
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resourcefile.qrc">
+     <normaloff>:/src/images/Buddha Line Icons/32/pluse.png</normaloff>:/src/images/Buddha Line Icons/32/pluse.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pbMinus">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>150</y>
+     <width>30</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="resourcefile.qrc">
+     <normaloff>:/src/images/Buddha Line Icons/32/minus.png</normaloff>:/src/images/Buddha Line Icons/32/minus.png</iconset>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resourcefile.qrc"/>
+ </resources>
  <connections/>
 </ui>

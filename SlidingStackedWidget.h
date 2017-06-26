@@ -15,8 +15,7 @@ public:
     ~SlidingStackedWidget(void);
 
     int addWidget(QWidget *widget);
-    void setCurrentWidget(QWidget *widget);
-    int setRootWidget(QWidget *widget);
+    void setRootWidget(QWidget *widget);
     void setPreviousWidget();
 
     QWidget *m_mainwindow;

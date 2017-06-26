@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    ThermostatModel *thermostatModel = new ThermostatModel();
+    //ThermostatModel *thermostatModel = new ThermostatModel();
     MainWindow w;
     QPalette darkPalette;
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     a.setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
 
-    w.setModel(thermostatModel);
+    //w.setModel(thermostatModel);
     w.show();
 
     return a.exec();
